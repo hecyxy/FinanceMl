@@ -5,12 +5,13 @@ import pickle
 import platform
 
 def load_data():
-    train = _parse_data(open('ner/data/train_data.data','rb'))
-    test = _parse_data(open('ner/data/test_data.data','rb'))
+    train = _parse_data(open('ner/data/train_search.data','rb'))
+    test = _parse_data(open('ner/data/test_search.data','rb'))
     word_counts = Counter(row[0].lower() for sample in train for row in sample)
     vocab = [w for w,f in iter(word_counts.items()) if f>=2]
-    chunk_tags = ['O', 'B-PER', 'I-PER', 'B-LOC', 'I-LOC', "B-ORG", "I-ORG"]
-    with open('ner/data/config.pkl','wb') as outp:
+    # chunk_tags = ['O', 'B-PER', 'I-PER', 'B-LOC', 'I-LOC', "B-ORG", "I-ORG"]
+    chunk_tags = ['B-PRO', 'I-PRO', 'B-LOC', 'I-LOC', "B-ORG", "I-ORG"]
+    with open('ner/model/search.pkl','wb') as outp:
         pickle.dump((vocab,chunk_tags),outp)
     train = _process_data(train,vocab,chunk_tags)
     test = _process_data(test,vocab,chunk_tags)

@@ -12,7 +12,7 @@ def create_model(train=True):
     if train:
         (train_x,train_y),(text_x,text_y),(vocab,chunk_tags) = process_data.load_data()
     else:
-        with open('ner/data/config.pkl','rb') as inp:
+        with open('ner/model/search.pkl','rb') as inp:
             (vocab,chunk_tags) = pickle.load(inp)
 
     model = Sequential()
