@@ -23,17 +23,17 @@ def filter():
 
 label = ['B-PRO', 'I-PRO', 'B-LOC', 'I-LOC', "B-ORG", "I-ORG"]
 def combination():
-    locReader = open('/Users/hecy/workdir/location.data','r',encoding = 'utf-8')
-    orgReader = open('/Users/hecy/workdir/s_name_org.data','r',encoding = 'utf-8')
-    proReader = open('/Users/hecy/workdir/s_title.data','r',encoding = 'utf-8')
-    loc = []
+    #locReader = open('/Users/hecy/workdir/location.data','r',encoding = 'utf-8')
+    orgReader = open('/Users/hecy/opensource/s_name_org.data','r',encoding = 'utf-8')
+    proReader = open('/Users/hecy/opensource/s_title.data','r',encoding = 'utf-8')
+    #loc = []
     org = []
     pro = []
-    while True:
-        line = locReader.readline()
-        if not line:
-            break
-        loc.append(line.strip())
+    # while True:
+    #     line = locReader.readline()
+    #     if not line:
+    #         break
+    #     loc.append(line.strip())
     while True:
         line = orgReader.readline()
         if not line:
@@ -45,34 +45,38 @@ def combination():
             break
         pro.append(line.strip())
     data = []
-    for i in loc:
-        f = 0
+    # for i in loc:
+    #     f = 0
+    #     temp = []
+    #     for str in i:
+    #         if f == 0:
+    #             temp.append(str+' '+'B-LOC\n')
+    #         else:
+    #             temp.append(str+' '+'I-LOC\n')
+    #         f += 1
+    for j in range(10000,12000):
+        p = 0
         temp = []
-        for str in i:
-            if f == 0:
-                temp.append(str+' '+'B-LOC\n')
+        for str in org[j]:
+            if p == 0:
+                temp.append(str+' B-ORG|')
             else:
-                temp.append(str+' '+'I-LOC\n')
-            f += 1
-        for j in range(137330,137340):
-            p = 0
-            for str in org[j]:
-                if p == 0:
-                    temp.append(str+' B-ORG\n')
+                temp.append(str+' I-ORG|')
+            p += 1
+        for k in range(1000,1200):
+            q = 0
+            data.extend(temp)
+            length = len(pro[k])
+            for str in pro[k]:
+                if q == 0:
+                    data.append(str+' B-PRO|')
+                elif(q < length - 1):
+                    data.append(str+' I-PRO|')
                 else:
-                    temp.append(str+' I-ORG\n')
-                p += 1
-            for k in range(34442,34452):
-                q = 0
-                data.extend(temp)
-                for str in pro[k]:
-                    if q == 0:
-                        data.append(str+' B-PRO\n')
-                    else:
-                        data.append(str+' I-PRO\n')
-                    q += 1
-                data.append('\n')
-    f = open('ner/data/test_search.data','w')
+                    data.append(str+' I-PRO')
+                q += 1
+            data.append('\n')
+    f = open('ner/data/test_name_pro.data','w')
     f.write(''.join(data))
     f.close()
 

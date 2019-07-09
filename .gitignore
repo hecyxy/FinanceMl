@@ -2,3 +2,5 @@ NVIDIA GPU
 .vscode
 ner/__pycache__
 *.DS_Store
+ner/data/train_name_pro.data
+ner/data/test_name_pro.data
