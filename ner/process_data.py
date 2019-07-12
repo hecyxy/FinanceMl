@@ -11,7 +11,7 @@ def load_data():
     vocab = [w for w,f in iter(word_counts.items()) if f>=2]
     # chunk_tags = ['O', 'B-PER', 'I-PER', 'B-LOC', 'I-LOC', "B-ORG", "I-ORG"]
     chunk_tags = ['B-PRO', 'I-PRO', "B-ORG", "I-ORG"]# 'B-LOC', 'I-LOC',
-    with open('ner/model/search2.pkl','wb') as outp:
+    with open('ner/model/search0.pkl','wb') as outp:
         pickle.dump((vocab,chunk_tags),outp)
     train = _process_data(train,vocab,chunk_tags)
     test = _process_data(test,vocab,chunk_tags)
@@ -31,7 +31,7 @@ def _parse_data2(fn):
     line = fn.readline()
     data = []
     j = 0
-    while j < 1000000:
+    while j < 1000:
         line = fn.readline()
         if not line:
             break
@@ -64,5 +64,3 @@ def process_data(data,vocab,maxlen=100):
     length = len(x)
     x = pad_sequences([x],maxlen)
     return x,length
-
-load_data()
